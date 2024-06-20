@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARISYNERGY HR MANAGEMENT SYSTEM - Employee List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap');
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(45deg, #f7ac06, #ffc371, #f7ac06);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            margin-bottom: 60px; /* Adjust based on the navbar height */
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .fixed-bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .fixed-bottom-navbar a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold; /* Add this line to make the font bold */
+            transition: all 0.3s ease;
+        }
+
+        .fixed-bottom-navbar a:hover {
+            color: #d1d1d1;
+            transform: scale(1.2); /* Increase size on hover */
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #f7ac06 !important;
+            margin: 0 auto; /* Center the title */
+            font-family: 'Lora', serif;
+        }
+
+        .container-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 80px; /* Add space between the title and the navigation bar */
+            margin-bottom: 20px; /* Add space between the box and the bottom navigation bar */
+        }
+
+        h2 {
+            font-family: 'Lora', serif;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+        }
+
+        .logo {
+            width: 30px;
+            margin-right: 10px;
+        }
+
+        .logout-link {
+            color: red !important;
+        }
+
+        .btn-custom {
+            background-color: #f7ac06;
+            color: #fff;
+            border: none;
+            font-family: 'Raleway', sans-serif;
+            font-weight: bold;
+        }
+
+        .btn-custom:hover {
+            background-color: #ffc107;
+        }
+
+        .employee-list {
+            margin-top: 20px;
+        }
+
+        .employee-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .employee-id {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: calc(100% - 90px);
+            display: inline-block;
+        }
+
+        .search-bar button {
+            display: inline-block;
+        }
+
+        .employee-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .employee-details span {
+            margin-bottom: 5px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'sikirinshot.jpeg' %}" alt="Logo" class="logo">
+                JARISYNERGY HR MANAGEMENT SYSTEM
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="container-box">
+            <h2>Employee List</h2>
+            <div class="search-bar">
+                <form method="get">
+                    <input type="text" name="search" class="form-control" placeholder="Search by Employee Name" value="{{ query|default_if_none:'' }}">
+                    <button type="submit" class="btn btn-custom">Search</button>
+                </form>
+            </div>
+            <div class="employee-list">
+                {% for employee in employees %}
+                    <div class="employee-item">
+                        <div class="employee-details">
+                            <span class="employee-id">{{ employee.name }}</span>
+                            <span>Name: {{ employee.name }}</span>
+                            <span>Address: {{ employee.address }}</span>
+                            <span>Telephone: {{ employee.telephone }}</span>
+                            <span>Gender: {{ employee.gender }}</span>
+                            <span>Employment Type: {{ employee.employment_type }}</span>
+                            <span>Salary: {{ employee.salary }}</span>
+                            <span>Date of Hire: {{ employee.date }}</span>
+                            {% with emp_prof=emp_profs.employee.name %}
+                                {% if emp_prof %}
+                                    <span>Username: {{ emp_prof.username1 }}</span>
+                                    <span>Password: {{ emp_prof.password1 }}</span>
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                        <div class="btn-group">
+                            <a href="{% url 'edit_employee' employee.name %}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{% url 'login_details' employee.name %}" class="btn btn-secondary btn-sm">Login Details</a>
+                            <a href="{% url 'delete_employee' employee.name %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No employees found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-bottom-navbar">
+        <a href="{% url 'manager1' %}">Home</a> |
+        <a href="{% url 'employeelist' %}">Employees</a> | 
+        <a href="{% url 'manageleave' %}">Manage Leaves</a> | 
+        <a href="{% url 'homepage' %}" class="logout-link">Logout</a>
+    </div>
+
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+</body>
+</html>

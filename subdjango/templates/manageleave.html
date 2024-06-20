@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARISYNERGY HR MANAGEMENT SYSTEM - Leave Request List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #f7ac06, #ffc371, #f7ac06);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            margin-bottom: 60px;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .container-box h2 {
+            margin-top: 0;
+        }
+
+        .fixed-bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .fixed-bottom-navbar a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .fixed-bottom-navbar a:hover {
+            color: #d1d1d1;
+            transform: scale(1.2);
+        }
+
+        .logo {
+            width: 30px;
+            margin-right: 10px;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #f7ac06 !important;
+            margin: 0 auto;
+            font-family: 'Lora', serif;
+        }
+
+        .leave-request-list {
+            padding: 0;
+        }
+
+        .leave-request-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #f7ac06;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .leave-request-item h4 {
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .leave-request-item .leave-details {
+            padding-left: 0;
+        }
+
+        .leave-request-item .leave-details div {
+            text-align: left;
+        }
+
+        .leave-request-item .action-buttons {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .leave-request-item .action-buttons .btn {
+            margin-bottom: 10px;
+        }
+
+        .leave-request-item .action-buttons .btn-reject {
+            background-color: orange;
+            border-color: orange;
+        }
+
+        .leave-request-item p {
+            margin-bottom: 0;
+        }
+
+        .leave-request-item .status {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .logout-link {
+            color: #f00 !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'sikirinshot.jpeg' %}" alt="Logo" class="logo">
+                JARISYNERGY HR MANAGEMENT SYSTEM
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="container-box">
+            <h2>Leave Request List</h2>
+            <div class="leave-request-list">
+                {% for leave_request in leave_requests %}
+                <div id="leave-request-{{ leave_request.startDate }}" class="leave-request-item">
+                    <div>
+                        <h4>Employee: {{ leave_request.employeeName }}</h4>
+                        <div class="leave-details">
+                            <div><strong>Start Date:</strong> {{ leave_request.startDate|date:"Y-m-d" }}</div>
+                            <div><strong>End Date:</strong> {{ leave_request.endDate }}</div>
+                            <div><strong>Reason:</strong> {{ leave_request.reason }}</div>
+                            <div><strong>Total Days:</strong> {{ leave_request.totalDays }}</div>
+                            {% if leave_request.medicalCertificate %}
+                            <div>
+                                <strong>Medical Certificate:</strong>
+                                <a href="{{ leave_request.medicalCertificate.url }}" target="_blank">Download</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-success accept" data-startdate="{{ leave_request.startDate }}">Approve</button>
+                        <button class="btn btn-reject reject" data-startdate="{{ leave_request.startDate }}">Reject</button>
+                        <a href="{% url 'editleave' leave_request.startDate %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'deleteleave' leave_request.startDate %}" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+                {% empty %}
+                <div>No leave requests found.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-bottom-navbar">
+        <a href="{% url 'manager1' %}">Home</a> | 
+        <a href="{% url 'employeelist' %}">Employees</a> | 
+        <a href="{% url 'manageleave' %}">Manage Leaves</a> | 
+        <a href="{% url 'homepage' %}" class="logout-link">Logout</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.accept, .reject').click(function(event) {
+                event.preventDefault();
+                var startDate = $(this).data('startdate');
+                var date = new Date(startDate);
+                // Set the timezone offset to UTC
+                date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+                var formattedStartDate = date.toISOString().split('T')[0];
+                var action = $(this).hasClass('accept') ? 'accept' : 'reject'; // Define action here
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "manageleave" %}',
+                    data: {
+                        'start_date': formattedStartDate,
+                        'action': action,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.message === 'Action successful') {
+                            $('#leave-request-' + startDate).remove();
+                        } else {
+                            alert('Failed to update status');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alert('Failed to update status');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

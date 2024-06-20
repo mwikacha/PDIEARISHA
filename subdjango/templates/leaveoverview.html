@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARISYNERGY HR MANAGEMENT SYSTEM - Leave Application Overview</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(45deg, #f7ac06, #ffc371, #f7ac06);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            margin-bottom: 60px; /* Adjust based on the navbar height */
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #f7ac06 !important;
+            margin: 0 auto; /* Center the title */
+            font-family: 'Lora', serif;
+        }
+
+        .content-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            margin-top: 60px; /* Space between the navigation bar and the title */
+        }
+
+        .content-box h2 {
+            font-family: 'Lora', serif;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .content-box h3 {
+            font-family: 'Lora', serif;
+            color: #333;
+            text-align: left; /* Align to the left */
+            margin-bottom: 20px;
+        }
+
+        .content-box p {
+            font-size: 1em; /* Adjusted to be slightly smaller */
+            margin-bottom: 15px;
+            text-align: left; /* Align to the left */
+        }
+
+        .content-box hr {
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        .btn-primary {
+            background-color: #f7ac06;
+            border-color: #f7ac06;
+        }
+
+        .btn-primary:hover {
+            background-color: #e09b05;
+            border-color: #e09b05;
+        }
+
+        .fixed-bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .fixed-bottom-navbar a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold; /* Add this line to make the font bold */
+            transition: all 0.3s ease;
+        }
+
+        .fixed-bottom-navbar a:hover {
+            color: #d1d1d1;
+            transform: scale(1.2); /* Increase size on hover */
+        }
+
+        .logout-link {
+            color: #f00 !important; /* Red color for the logout link */
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'sikirinshot.jpeg' %}" alt="Logo" style="width: 30px; margin-right: 10px;">
+                JARISYNERGY HR MANAGEMENT SYSTEM
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="content-box">
+                    <h2>Leave Application Overview</h2>
+                    <h3>Leave Policy Summary</h3>
+                    <p>Employees are entitled to annual, sick, maternity, paternity, emergency, and unpaid leave in accordance with Malaysian labor laws, with specific eligibility and application requirements for each type.</p>
+                    <hr>
+                    <h3>Instructions and Rules for Leave Application</h3>
+                    <p>1. Submit a leave application form or online request at least 7 days in advance.</p>
+                    <p>2. Submit a medical certificate for sick leave exceeding 2 consecutive days.</p>
+                    <p>3. Submit a maternity leave form along with a medical certificate confirming pregnancy and expected confinement date.</p>
+                    <p>4. No application required; leave is automatically granted on designated public holidays.</p>
+                    <p>5. Submit a request for compassionate leave with relevant documentation (e.g., death certificate, hospital admission note).</p>
+                    <hr>
+                    <h3>Frequently Asked Questions</h3>
+                    <p><strong>Q:</strong> How do I apply for leave?<br>
+                       <strong>A:</strong> Click the "Apply for Leave" button below and fill out the form.</p>
+                    <p><strong>Q:</strong> What happens after I submit my leave application?<br>
+                       <strong>A:</strong> Kindly wait for your manager to review and approve or reject your application.</p>
+                    
+                    <div class="text-center mt-4">
+                        <a href="{% url 'leaveapplication' %}" class="btn btn-primary">Apply for Leave</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-bottom-navbar">
+        <a href="{% url 'employeeprofile' %}">Profile</a> | 
+        <a href="{% url 'leaveoverview' %}">Leave Application</a> |
+        <a href="{% url 'leavehistory' %}">Leave History</a> | 
+        <a href="{% url 'homepage' %}" class="logout-link">Logout</a>
+    </div>
+
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+</body>
+</html>

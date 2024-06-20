@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARISYNERGY HR MANAGEMENT SYSTEM - Add Employee</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap');
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(45deg, #f7ac06, #ffc371, #f7ac06);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            margin-bottom: 60px; /* Adjust based on the navbar height */
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .fixed-bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .fixed-bottom-navbar a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold; /* Add this line to make the font bold */
+            transition: all 0.3s ease;
+        }
+
+        .fixed-bottom-navbar a:hover {
+            color: #d1d1d1;
+            transform: scale(1.2); /* Increase size on hover */
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #f7ac06 !important;
+            margin: 0 auto; /* Center the title */
+            font-family: 'Lora', serif;
+        }
+
+        .container-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 80px; /* Add space between the title and the navigation bar */
+            margin-bottom: 20px; /* Add space between the box and the bottom navigation bar */
+        }
+
+        h2 {
+            font-family: 'Lora', serif;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h4 {
+            font-family: 'Roboto', sans-serif;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+        }
+
+        .logo {
+            width: 30px;
+            margin-right: 10px;
+        }
+
+        .logout-link {
+            color: red !important;
+        }
+
+        .btn-custom {
+            background-color: #f7ac06;
+            color: #fff;
+            border: none;
+            font-family: 'Raleway', sans-serif;
+            font-weight: bold;
+        }
+
+        .btn-custom:hover {
+            background-color: #ffc107;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'sikirinshot.jpeg' %}" alt="Logo" class="logo">
+                JARISYNERGY HR MANAGEMENT SYSTEM
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="container-box">
+            <h2>Add Employee</h2>
+            <form action="{% url 'addemployee' %}" method="post" id="employeeForm">
+                {% csrf_token %}
+                <div class="form-section">
+                    <h4>Personal Details</h4>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telephone</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <input type="text" class="form-control" id="gender" name="gender" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="employment_type">Employment Type</label>
+                        <input type="text" class="form-control" id="employment_type" name="employment_type" required>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary">Salary</label>
+                        <input type="number" class="form-control" id="salary" name="salary" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date_of_hire">Date of Hire</label>
+                        <input type="date" class="form-control" id="date_of_hire" name="date_of_hire" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-custom btn-block">Add Employee</button>
+            </form>
+            {% if success %}
+                <p class="success-message">Employee Added</p>
+                <script>
+                    document.getElementById("employeeForm").reset();
+                </script>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="fixed-bottom-navbar">
+        <a href="{% url 'manager1' %}">Home</a> |
+        <a href="{% url 'employeelist' %}">Employees</a> | 
+        <a href="{% url 'manageleave' %}">Manage Leaves</a> | 
+        <a href="{% url 'homepage' %}" class="logout-link">Logout</a>
+    </div>
+
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+</body>
+</html>

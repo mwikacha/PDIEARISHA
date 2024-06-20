@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARISYNERGY HR MANAGEMENT SYSTEM - Leave History</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(45deg, #f7ac06, #ffc371, #f7ac06);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            margin-bottom: 60px; 
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .fixed-bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .fixed-bottom-navbar a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold; 
+            transition: all 0.3s ease;
+        }
+
+        .fixed-bottom-navbar a:hover {
+            color: #d1d1d1;
+            transform: scale(1.2); 
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #f7ac06 !important;
+            margin: 0 auto; 
+            font-family: 'Lora', serif;
+        }
+
+        h2 {
+            font-family: 'Lora', serif;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .leave-history {
+            margin-top: 40px; 
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .leave-history-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .leave-history-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .leave-history-item {
+            margin-bottom: 20px; 
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #f7ac06;
+        }
+
+        .leave-history-item:not(:last-child) {
+            border-bottom: 1px solid #ddd; 
+        }
+
+        .leave-history-item h4 {
+            margin-bottom: 5px;
+        }
+
+        .leave-history-item p {
+            margin-bottom: 0;
+        }
+
+        .leave-history-item .status {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .logout-link {
+            color: #f00 !important; 
+        }
+
+        .btn-success.accept {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+        .btn-danger.reject {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        /* Adjust the text color for better visibility */
+        .btn-success.accept, .btn-danger.reject {
+            color: #fff;
+        }
+
+        .accepted {
+            color: #28a745; /* Green color for accepted */
+        }
+
+        .rejected {
+            color: #dc3545; /* Red color for rejected */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'sikirinshot.jpeg' %}" alt="Logo" style="width: 30px; margin-right: 10px;">
+                JARISYNERGY HR MANAGEMENT SYSTEM
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="leave-history">
+                    <h2 class="leave-history-title">Leave History & Status</h2>
+                    <ul class="leave-history-list">
+                        {% for leave_histories in leave_histories %}
+                        <li class="leave-history-item">
+                            <h4>Application {{ forloop.counter }}</h4>
+                            <ul>
+                                <li><strong>Start Date:</strong> {{ leave_histories.startDate }}</li>
+                                <li><strong>End Date:</strong> {{ leave_histories.endDate }}</li>
+                                <li><strong>Reason:</strong> {{ leave_histories.reason }}</li>
+                                <li><strong>Total Days:</strong> {{ leave_histories.totalDays }}</li>
+                                {% if leave_histories.medicalCertificate %}
+                                <li>
+                                    <strong>Medical Certificate:</strong>
+                                    <a href="{{ leave_histories.medicalCertificate.url }}" target="_blank">Download</a>
+                                </li>
+                                {% endif %}
+                                <h6 class="status {% if leave_histories.status == 'Accepted' %}accepted{% elif leave_histories.status == 'Rejected' %}rejected{% endif %}">
+                                    <strong>Status:</strong> {{ leave_histories.status }}
+                                </h6> 
+                            </ul>
+                        </li>
+                        {% empty %}
+                        <li>No leave history found.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-bottom-navbar">
+        <a href="{% url 'employeeprofile' %}">Profile</a> |  
+        <a href="{% url 'leaveoverview' %}">Leave Application</a> |
+        <a href="{% url 'leavehistory' %}">Leave History</a> | 
+        <a href="{% url 'homepage' %}" class="logout-link">Logout</a>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+</body>
+</html>

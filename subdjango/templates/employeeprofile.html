@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARISYNERGY HR MANAGEMENT SYSTEM</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap');
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(45deg, #f7ac06, #ffc371, #f7ac06);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            margin-bottom: 60px; /* Adjust based on the navbar height */
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .fixed-bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .fixed-bottom-navbar a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .fixed-bottom-navbar a:hover {
+            color: #d1d1d1;
+            transform: scale(1.2); /* Increase size on hover */
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #f7ac06;
+            color: #fff;
+            font-weight: bold;
+            font-family: 'Lora', serif;
+            font-size: 1.2em;
+        }
+
+        .card-body {
+            padding: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .profile-picture {
+            margin-bottom: 20px;
+        }
+
+        .profile-picture img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .personal-info, .employment-info {
+            margin-bottom: 20px;
+        }
+
+        .personal-info h5, .employment-info h5 {
+            font-size: 1.1em;
+            margin-bottom: 5px; /* Add margin bottom */
+            font-weight: bold;
+        }
+
+        .personal-info p, .employment-info p {
+            margin: 5px 0 15px 0; /* Add margin bottom and reduce margin top */
+            font-weight: normal;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #f7ac06 !important;
+            margin: 0 auto; /* Center the title */
+            font-family: 'Lora', serif;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2em;
+            color: #333;
+            font-family: 'Roboto', sans-serif;
+        }
+        .logout-link {
+            color: red !important;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="{% static 'sikirinshot.jpeg' %}" alt="Logo" style="width: 30px; margin-right: 10px;">
+                JARISYNERGY HR MANAGEMENT SYSTEM
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-5">
+        <div class="wrapper">
+            <div id="content">
+                <main role="main" class="col-md-12">
+                    <div class="container mt-5">
+                        <div class="subtitle">
+                            Welcome, {{ employee.name }} !
+                        </div>
+                        <div class="card">
+                            <div class="card-header text-center">
+                                Profile Information
+                            </div>
+                            <div class="card-body">
+                                <div class="profile-picture text-center">
+                                    <img src="{% static 'images1234.png' %}" alt="Profile Picture">
+                                </div>
+                                <hr>
+                                <div class="personal-info">
+                                    <h5>Name:</h5>
+                                    <p>{{ employee.name }}</p>
+                                    <h5>Gender:</h5>
+                                    <p>{{ employee.gender }}</p>
+                                    <h5>Address:</h5>
+                                    <p>{{ employee.address }}</p>
+                                    <h5>Phone:</h5>
+                                    <p>{{ employee.telephone }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header text-center">
+                                Employment Information
+                            </div>
+                            <div class="card-body">
+                                <div class="employment-info">
+                                    <h5>Salary:</h5>
+                                    <p>RM {{ employee.salary }}</p>
+                                    <h5>Employment Type:</h5>
+                                    <p>{{ employee.employment_type }}</p>
+                                    <h5>Date of Hire:</h5>
+                                    <p>{{ employee.date }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-bottom-navbar">
+        <a href="{% url 'employeeprofile' %}">Profile</a> |  
+        <a href="{% url 'leaveoverview' %}">Leave Application</a> |
+        <a href="{% url 'leavehistory' %}">Leave History</a> | 
+        <a href="{% url 'homepage' %}" class="logout-link">Logout</a></a>
+    </div>
+</body>
+</html>

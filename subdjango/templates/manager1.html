@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARISYNERGY HR MANAGEMENT SYSTEM - Manager Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap');
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(45deg, #f7ac06, #ffc371, #f7ac06);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            margin-bottom: 60px; /* Adjust based on the navbar height */
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .fixed-bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .fixed-bottom-navbar a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold; /* Add this line to make the font bold */
+            transition: all 0.3s ease;
+        }
+
+        .fixed-bottom-navbar a:hover {
+            color: #d1d1d1;
+            transform: scale(1.2); /* Increase size on hover */
+        }
+
+        .navbar {
+            background-color: #343a40;
+            display: inline-block;
+        }
+
+        .navbar-brand {
+            color: #f7ac06 !important;
+            margin: 0 auto; /* Center the title */
+            font-family: 'Lora', serif;
+        }
+
+        .dashboard {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 120px; /* Increase space between the title and the navigation bar */
+            text-align: center;
+        }
+
+        h2 {
+            font-family: 'Lora', serif;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .stat {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .stat-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1em;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .logo {
+            width: 30px;
+            margin-right: 10px;
+            display: block;
+            margin: 0 auto 10px; /* Center the logo and add space below */
+        }
+
+        .logout-link {
+            color: red !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'sikirinshot.jpeg' %}" alt="Logo" class="logo">
+                    JARISYNERGY HR MANAGEMENT SYSTEM
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="dashboard">
+            <h2>Manager Dashboard</h2>
+            <div class="stats">
+                <div class="stat">
+                    <img src="{% static 'images123.png' %}" alt="Logo" class="logo">
+                    {{ total_employees }}
+                    <div class="stat-title">Total Employees</div>
+                </div>
+                <div class="stat">
+                    <img src="{% static 'wow123.png' %}" alt="Logo" class="logo">
+                    {{ total_leave_requests }}
+                    <div class="stat-title">Total Leave Requests</div>
+                </div>
+                <div class="stat">
+                    <img src="{% static 'kaching.jpg' %}" alt="Logo" class="logo">
+                    {{ accepted_leaves }}
+                    <div class="stat-title">Accepted Leaves</div>
+                </div>
+                <div class="stat">
+                    <img src="{% static 'tet.jpg' %}" alt="Logo" class="logo">
+                    {{ rejected_leaves }}
+                    <div class="stat-title">Rejected Leaves</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-bottom-navbar">
+        <a href="{% url 'manager1' %}">Home</a> |
+        <a href="{% url 'employeelist' %}">Employees</a> | 
+        <a href="{% url 'manageleave' %}">Manage Leaves</a> | 
+        <a href="{% url 'homepage' %}" class="logout-link">Logout</a>
+    </div>
+
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+</body>
+</html>

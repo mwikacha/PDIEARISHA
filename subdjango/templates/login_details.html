@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARISYNERGY HR MANAGEMENT SYSTEM - Login Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap');
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(45deg, #f7ac06, #ffc371, #f7ac06);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            margin-bottom: 60px; /* Adjust based on the navbar height */
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 80px; /* Add space between the title and the navigation bar */
+            margin-bottom: 20px; /* Add space between the box and the bottom navigation bar */
+        }
+
+        h2 {
+            font-family: 'Lora', serif;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+        }
+
+        .btn-custom {
+            background-color: #f7ac06;
+            color: #fff;
+            border: none;
+            font-family: 'Raleway', sans-serif;
+            font-weight: bold;
+        }
+
+        .btn-custom:hover {
+            background-color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="container-box">
+            {% if message %}
+                <p>{{ message }}</p>
+            {% endif %}
+            <h2>Login Details for {{ employee.name }}</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" value="{{ employee.name }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-custom">Add</button>
+            </form>
+
+             {% if emp_prof %}
+                <div style="margin-top: 20px;"> <!-- Add this div with margin-top -->
+                    <h3>Login Details</h3>
+                    <ul>
+                        <li><strong>Username:</strong> {{ emp_prof.username1 }}</li>
+                        <li><strong>Password:</strong> {{ emp_prof.password1 }}</li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script>
+        function enableEdit() {
+            document.getElementById('password').readOnly = false;
+            document.querySelector('button').innerText = 'Update';
+            document.querySelector('button').setAttribute('onclick', 'updatePassword()');
+        }
+
+        function updatePassword(username) {
+            let newPassword = document.getElementById('password').value;
+            fetch(`/update-password/${username}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ password: newPassword })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Password updated successfully!');
+                } else {
+                    alert('Failed to update password.');
+                }
+            });
+        }
+
+        function deleteAccount(username) {
+            fetch(`/delete-account/${username}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Account deleted successfully!');
+                    window.location.href = '/'; // Redirect to home page or any other page
+                } else {
+                    alert('Failed to delete account.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+</body>
+</html>

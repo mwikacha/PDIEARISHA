@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Management System</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, yellow, orange, white);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo {
+            margin-top: 20px;
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+        }
+
+        .main-heading {
+            font-family: 'Raleway', sans-serif;
+            font-size: 48px; /* Adjust size as needed */
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .login-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; /* Adjust size as needed */
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .login-button {
+            padding: 20px 40px;
+            background-color: yellow;
+            color: orange;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .login-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{% static 'sikirinshot.jpeg' %}" alt="Logo" class="logo"> <!-- Ensure this path is correct -->
+        <h1 class="main-heading">JARISYNERGY HR MANAGEMENT SYSTEM</h1>
+        <p class="login-text">Login here as a...</p>
+        <div class="button-container">
+            <button class="login-button" type="button"><a href="{% url 'login2' %}" style="color: inherit; text-decoration: none;">MANAGER</a></button>
+            <button class="login-button" type="button"><a href="{% url 'login3' %}" style="color: inherit; text-decoration: none;">EMPLOYEE</a></button>
+        </div>
+    </div>
+</body>
+</html>
